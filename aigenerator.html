@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌸 Motivational Quotes Generator for Girls 🌸</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fef8fc;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #f05a28;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #f05a28;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            height: 80px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #f05a28;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d44f1f;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffe4e1;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+
+        .quote {
+            font-style: italic;
+            margin: 10px 0;
+            color: #f05a28;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🌸 Motivational Quotes Generator 🌸</h1>
+        <form id="generator-form">
+            <label for="instructions">Enter a theme or keyword (optional):</label>
+            <textarea id="instructions" placeholder="e.g., strength, confidence, self-love..."></textarea>
+            <button type="submit">Generate Quote</button>
+        </form>
+        <div id="output" class="quote"></div>
+        <div class="footer">
+            Created with 💖 by [Your Name]
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.getElementById('generator-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const instructions = document.getElementById('instructions').value;
+            generateQuote(instructions);
+        });
+
+        async function generateQuote(instructions) {
+            const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+
+            try {
+                const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
+                    prompt: `Generate a motivational quote for girls about ${instructions}`,
+                    max_tokens: 50,
+                    n: 1,
+                    stop: null,
+                    temperature: 0.7,
+                }, {
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json",
+                    }
+                });
+
+                const generatedQuote = response.data.choices[0].text.trim();
+                document.getElementById('output').innerText = generatedQuote;
+            } catch (error) {
+                console.error("Error generating quote:", error);
+                document.getElementById('output').innerText = "An error occurred while generating the quote.";
+            }
+        }
+    </script>
+</body>
+
+</html>
