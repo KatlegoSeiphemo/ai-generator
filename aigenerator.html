@@ -1,133 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌸 Motivational Quotes Generator for Girls 🌸</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovely Quotes for Women and Girls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #fef8fc;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+            background-color: #fde8f0; /* Soft pink background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             text-align: center;
         }
 
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
         h1 {
-            color: #f05a28;
-            font-size: 2.5em;
+            font-family: 'Pacifico', cursive; /* Cuter font for the heading */
+            color: #d5006d; /* Dark pink color */
             margin-bottom: 20px;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #f05a28;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            height: 80px;
-            font-size: 1em;
-        }
-
-        button {
-            background-color: #f05a28;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.2em;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #d44f1f;
-        }
-
-        #output {
-            margin-top: 20px;
-            padding: 15px;
-            background: #ffe4e1;
-            border-radius: 5px;
-            font-size: 1.2em;
         }
 
         .quote {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 20px;
             font-style: italic;
-            margin: 10px 0;
-            color: #f05a28;
+            padding: 10px;
+            border-left: 4px solid #d5006d; /* Left border for emphasis */
+            background-color: #fff5f7; /* Light pink background for the quote */
+            border-radius: 5px;
         }
 
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #d5006d; /* Dark pink button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #a30045; /* Darker pink on hover */
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h1>🌸 Motivational Quotes Generator 🌸</h1>
-        <form id="generator-form">
-            <label for="instructions">Enter a theme or keyword (optional):</label>
-            <textarea id="instructions" placeholder="e.g., strength, confidence, self-love..."></textarea>
-            <button type="submit">Generate Quote</button>
-        </form>
-        <div id="output" class="quote"></div>
-        <div class="footer">
-            Created with 💖 by [Your Name]
-        </div>
+        <h1>Lovely Quotes for Women</h1>
+        <div class="quote" id="quoteDisplay">"The future belongs to those who believe in the beauty of their dreams." - Eleanor Roosevelt</div>
+        <button id="generateQuote">Generate New Quote</button>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-        document.getElementById('generator-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const instructions = document.getElementById('instructions').value;
-            generateQuote(instructions);
-        });
+        const quotes = [
+            "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle. - Christian D. Larson",
+            "You are more than enough. - Anonymous",
+            "A girl should be two things: who and what she wants. - Coco Chanel",
+            "Nothing can dim the light that shines from within. - Maya Angelou",
+            "You are stronger than you know. - Anonymous",
+            "Your life is your story, and the adventure ahead of you is the journey to fulfill your own purpose and potential. - Kerry Washington",
+            "You are powerful, beautiful, and brave. - Anonymous",
+            "The most beautiful thing a woman can wear is confidence. - Blake Lively",
+            "Girls compete with each other; women empower one another. - Unknown",
+            "You are allowed to be both a masterpiece and a work in progress, simultaneously. - Sophia Bush",
+            "Be the woman who fixes another woman's crown, without telling the world it was crooked. - Unknown",
+            "She believed she could, so she did. - R.S. Grey",
+            "Your vibe attracts your tribe. - Unknown",
+            "You don't need someone to complete you. You only need someone to accept you completely. - Unknown",
+            "The best protection any woman can have is courage. - Elizabeth Cady Stanton",
+            "You are more powerful than you know; you are beautiful just as you are. - Melissa Etheridge",
+            "Success is not about what you have, but what you give. - Oprah Winfrey",
+            "A strong woman looks a challenge dead in the eye and gives it a wink. - Gina Carey",
+            "Your life isn’t yours if you constantly care what others think. - Anonymous",
+            "There is no limit to what we, as women, can accomplish. - Michelle Obama",
+            "You can’t be hesitant about who you are. - Carly Rae Jepsen",
+            "Well-behaved women seldom make history. - Laurel Thatcher Ulrich",
+            "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment. - Ralph Waldo Emerson",
+            "No one can make you feel inferior without your consent. - Eleanor Roosevelt",
+            "The most courageous act is still to think for yourself. Aloud. - Coco Chanel",
+            "I am my own muse. I am the subject I know best. - Frida Kahlo",
+            "You are braver than you believe, stronger than you seem, and smarter than you think. - A.A. Milne",
+            "Don’t wait for the right opportunity: create it. - George Bernard Shaw",
+            "The best way to make your dreams come true is to live them. - Roy T. Bennett",
+            "You can’t be afraid of what people are going to say, because you’re never going to make everyone happy. - Olivia Newton-John",
+            "You’re not a drop in the ocean. You are the entire ocean in a drop. - Rumi",
+            "Dream big and dare to fail. - Norman Vaughan",
+            "The most beautiful thing you can wear is confidence. - Blake Lively",
+            "Surround yourself with people who love you for who you are. - Anonymous",
+            "Let your dreams be your wings. - Anonymous",
+            "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+            "Embrace the glorious mess that you are. - Elizabeth Gilbert",
+            "The only person who can limit your dream is you. - Anonymous",
+            "Doubt kills more dreams than failure ever will. - Suzy Kassem",
+            "Every woman's success should be an inspiration to another. We're strongest when we cheer each other on. - Serena Williams",
+            "You are not a backup plan, and you are not a second choice. - Anonymous",
+            "You are unique and your contributions are invaluable. - Anonymous",
+            "Success is liking yourself, liking what you do, and liking how you do it. - Maya Angelou",
+            "Self-care is how you take your power back. - Lalah Delia",
+            "A woman should be like a single flower, not a whole bouquet. - Anna Held",
+            "When you dare to be yourself, you empower others to do the same. - Anonymous",
+            "Keep your face always toward the sunshine—and shadows will fall behind you. - Walt Whitman",
+            "You have what it takes to be a successful woman. - Anonymous",
+            "Everything you can imagine is real. - Pablo Picasso",
+            "Here’s to strong women: may we know them, may we be them, may we raise them. - Anonymous",
+            "Women are the real architects of society. - Harriet Beecher Stowe",
+            "Be yourself; everyone else is already taken. - Oscar Wilde",
+            "You were born to be real, not to be perfect. - Anonymous",
+            "You make a living by what you get. You make a life by what you give. - Winston S. Churchill",
+            "Girls with dreams become women with vision. - Anonymous",
+            "What lies behind us and what lies before us are tiny matters compared to what lies within us. - Ralph Waldo Emerson",
+            "Light tomorrow with today! - Elizabeth Barrett Browning",
+            "Think like a queen. A queen is not afraid to fail. Failure is another steppingstone to greatness. - Oprah Winfrey",
+            "A strong woman stands up for herself. A stronger woman stands up for everybody else. - Anonymous",
+            "You can’t stop the waves, but you can learn to surf. - Jon Kabat-Zinn",
+            "I can’t think of any better representation of beauty than someone who is unafraid to be herself. - Emma Stone",
+            "The best revenge is massive success. - Frank Sinatra",
+            "In the end, we only regret the chances we didn’t take. - Lewis Carroll",
+            "Success is not in what you have, but who you are. - Bo Bennett",
+            "Take risks: if you win, you will be happy; if you lose, you will be wise. - Anonymous",
+            "Be the type of person you want to meet. - Anonymous",
+            "The only woman you should try to be better than is the woman you were yesterday. - Anonymous",
+            "You are worthy of LOVE and ABUNDANCE. Your life is a gift. - Anonymous",
+            "Confidence is not "They will like me." Confidence is "I’ll be fine if they don’t." - Christina Grimmie",
+            "The most common way people give up their power is by thinking they don’t have any. - Alice Walker",
+            "She remembered who she was and the game changed. - Lalah Delia",
+            "If you want to lift yourself up, lift up someone else. - Booker T. Washington",
+            "You are what your thoughts are. - Anonymous",
+            "There’s nothing stronger than a broken woman who has rebuilt herself. - Hannah Gadsby",
+            "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+            "Life is not measured by the number of breaths we take, but by the moments that take our breath away. - Maya Angelou",
+            "You must do the things you think you cannot do. - Eleanor Roosevelt",
+            "Love yourself first and everything else falls into line. - Lucille Ball",
+            "Some days you just have to create your own sunshine. - Anonymous",
+            "Your only limit is you. - Anonymous",
+            "Your present circumstances don’t determine where you can go; they merely determine where you start. - Nido Qubein",
+            "Believe you can and you’re halfway there. - Theodore Roosevelt",
+            "Behind every successful woman is herself. - Anonymous",
+            "You are enough just as you are. - Bridget Jones",
+            "You are the artist of your own life. Don’t hand the paintbrush to anyone else. - Anonymous",
+            "If you don’t build your dream, someone else will hire you to help them build theirs. - Dhirubhai Ambani",
+            "You are here to make the world a better place, and I believe you can. - Anonymous",
+            "The best way to gain self-confidence is to do what you are afraid to do. - Swati Sharma",
+            "Dreams don’t work unless you do. - John C. Maxwell",
+            "A goal without a plan is just a wish. - Antoine de Saint-Exupéry",
+            "Whatever you are, be a good one. - Abraham Lincoln",
+            "It always seems impossible until it is done. - Nelson Mandela",
+            "Success doesn’t come from what you do occasionally. It comes from what you do consistently. - Marie Forleo",
+            "Never give up on a dream that you’ve been chasing for a long time. - Anonymous",
+            "Be somebody who makes everybody feel like a somebody. - Anonymous",
+            "You can’t put a limit on anything. The more you dream, the farther you get. - Michael Phelps",
+            "Act like what you want to become. - Anonymous",
+            "You have set a warrior in your heart; now conquer with your mind. - Anonymous",
+            "You’re off to great places! Today is your day! Your mountain is waiting, so… get on your way! - Dr. Seuss"
+        ];
 
-        async function generateQuote(instructions) {
-            const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
-
-            try {
-                const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
-                    prompt: `Generate a motivational quote for girls about ${instructions}`,
-                    max_tokens: 50,
-                    n: 1,
-                    stop: null,
-                    temperature: 0.7,
-                }, {
-                    headers: {
-                        "Authorization": `Bearer ${apiKey}`,
-                        "Content-Type": "application/json",
-                    }
-                });
-
-                const generatedQuote = response.data.choices[0].text.trim();
-                document.getElementById('output').innerText = generatedQuote;
-            } catch (error) {
-                console.error("Error generating quote:", error);
-                document.getElementById('output').innerText = "An error occurred while generating the quote.";
-            }
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerText = quotes[randomIndex];
         }
+
+        document.getElementById('generateQuote').addEventListener('click', generateQuote);
     </script>
 </body>
-
 </html>
